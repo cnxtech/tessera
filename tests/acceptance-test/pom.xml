@@ -311,7 +311,7 @@
                             </systemPropertyVariables>
                             <rerunFailingTestsCount>0</rerunFailingTestsCount>
                             <includes>
-                                <include>AdminRestSuite</include>
+                                <include>AdminRestSuite</include>>
                                 <include>RestSuiteSimple</include>
                                 <include>RestSuiteUnixH2</include>
                                 <include>CucumberWhitelistIT</include>
