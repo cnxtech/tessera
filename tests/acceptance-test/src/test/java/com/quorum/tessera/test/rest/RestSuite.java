@@ -5,10 +5,7 @@ import com.quorum.tessera.test.CucumberRestIT;
 import com.quorum.tessera.test.DBType;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import suite.EnclaveType;
-import suite.ParameterizedTestSuiteRunnerFactory;
-import suite.ProcessConfiguration;
-import suite.TestSuite;
+import suite.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +38,8 @@ public class RestSuite {
 
         for (final DBType database : DBType.values()) {
             for (final EnclaveType enclaveType : EnclaveType.values()) {
-                configurations.add(new ProcessConfiguration(database, REST, HTTP, enclaveType, false, ""));
+                configurations.add(
+                        new ProcessConfiguration(database, REST, HTTP, enclaveType, false, "", SslType.DISABLED));
             }
         }
 

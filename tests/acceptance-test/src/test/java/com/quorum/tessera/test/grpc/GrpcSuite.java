@@ -4,10 +4,7 @@ import com.quorum.tessera.test.CucumberGprcIT;
 import com.quorum.tessera.test.DBType;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import suite.EnclaveType;
-import suite.ParameterizedTestSuiteRunnerFactory;
-import suite.ProcessConfiguration;
-import suite.TestSuite;
+import suite.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,8 @@ public class GrpcSuite {
         final List<ProcessConfiguration> configurations = new ArrayList<>();
 
         for (final DBType database : DBType.values()) {
-            configurations.add(new ProcessConfiguration(database, GRPC, HTTP, EnclaveType.LOCAL, false, ""));
+            configurations.add(
+                    new ProcessConfiguration(database, GRPC, HTTP, EnclaveType.LOCAL, false, "", SslType.DISABLED));
         }
 
         return configurations;

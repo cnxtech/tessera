@@ -19,6 +19,8 @@ public class ProcessConfiguration {
 
     private boolean admin = false;
 
+    private SslType sslType;
+
     private String prefix = "";
 
     public ProcessConfiguration(
@@ -27,13 +29,15 @@ public class ProcessConfiguration {
             final SocketType socketType,
             final EnclaveType enclaveType,
             final boolean admin,
-            final String prefix) {
+            final String prefix,
+            final SslType sslType) {
         this.dbType = dbType;
         this.communicationType = communicationType;
         this.socketType = socketType;
         this.enclaveType = enclaveType;
         this.admin = admin;
         this.prefix = prefix;
+        this.sslType = sslType;
     }
 
     public ProcessConfiguration() {}
@@ -76,6 +80,14 @@ public class ProcessConfiguration {
 
     public void setAdmin(final boolean admin) {
         this.admin = admin;
+    }
+
+    public SslType getSslType() {
+        return sslType;
+    }
+
+    public void setSslType(final SslType sslType) {
+        this.sslType = sslType;
     }
 
     public String getPrefix() {

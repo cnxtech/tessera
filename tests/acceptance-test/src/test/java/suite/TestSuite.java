@@ -53,7 +53,8 @@ public class TestSuite extends Suite {
                                 annotatedConfig.socketType(),
                                 annotatedConfig.enclaveType(),
                                 annotatedConfig.admin(),
-                                annotatedConfig.prefix());
+                                annotatedConfig.prefix(),
+                                annotatedConfig.sslType());
             }
 
             ExecutionContext executionContext =

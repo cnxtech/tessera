@@ -24,5 +24,7 @@ public @interface ProcessConfig {
 
     boolean admin() default false;
 
+    SslType sslType() default SslType.DISABLED;
+
     String prefix() default "";
 }

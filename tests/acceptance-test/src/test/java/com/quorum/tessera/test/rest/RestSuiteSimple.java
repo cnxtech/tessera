@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import suite.ParameterizedTestSuiteRunnerFactory;
 import suite.ProcessConfiguration;
+import suite.SslType;
 import suite.TestSuite;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class RestSuiteSimple {
         final List<ProcessConfiguration> configurations = new ArrayList<>();
 
         for (final DBType database : DBType.values()) {
-            configurations.add(new ProcessConfiguration(database, REST, HTTP, LOCAL, false, ""));
+            configurations.add(new ProcessConfiguration(database, REST, HTTP, LOCAL, false, "", SslType.DISABLED));
         }
 
         return configurations;
