@@ -25,16 +25,23 @@ public class ExecutionContext {
 
     private String prefix;
 
-    private ExecutionContext(DBType dbType,
-        CommunicationType communicationType,
-        SocketType socketType,
-        EnclaveType enclaveType, boolean admin,String prefix) {
+    private SslType sslType;
+
+    private ExecutionContext(
+            DBType dbType,
+            CommunicationType communicationType,
+            SocketType socketType,
+            EnclaveType enclaveType,
+            boolean admin,
+            String prefix,
+            SslType sslType) {
         this.dbType = dbType;
         this.communicationType = communicationType;
         this.socketType = socketType;
         this.enclaveType = enclaveType;
         this.admin = admin;
         this.prefix = prefix;
+        this.sslType = sslType;
     }
 
     public DBType getDbType() {
@@ -65,6 +72,10 @@ public class ExecutionContext {
         return Optional.ofNullable(prefix);
     }
 
+    public SslType getSslType() {
+        return sslType;
+    }
+
     public static class Builder {
 
         private DBType dbType;
@@ -77,8 +88,11 @@ public class ExecutionContext {
 
         private String prefix;
 
-        private Builder() {
-        }
+        private boolean admin;
+
+        private SslType sslType;
+
+        private Builder() {}
 
         public static Builder create() {
             return new Builder();
@@ -105,24 +119,24 @@ public class ExecutionContext {
         }
 
         public Builder prefix(String prefix) {
-            this.prefix = Objects.equals("",prefix) ? null : prefix;
+            this.prefix = Objects.equals("", prefix) ? null : prefix;
             return this;
         }
-
-        private boolean admin;
 
         public Builder withAdmin(boolean admin) {
             this.admin = admin;
             return this;
         }
 
+        public Builder with(final SslType sslType) {
+            this.sslType = sslType;
+            return this;
+        }
+
         public ExecutionContext build() {
-            Stream.of(dbType, communicationType, socketType, enclaveType)
-                .forEach(Objects::requireNonNull);
+            Stream.of(dbType, communicationType, socketType, enclaveType, sslType).forEach(Objects::requireNonNull);
 
-            ExecutionContext executionContext = new ExecutionContext(dbType, communicationType, socketType, enclaveType, admin,prefix);
-
-            return executionContext;
+            return new ExecutionContext(dbType, communicationType, socketType, enclaveType, admin, prefix, sslType);
         }
 
         public ExecutionContext buildAndStoreContext() {
@@ -140,14 +154,13 @@ public class ExecutionContext {
 
         public ExecutionContext createAndSetupContext() {
 
-            Stream.of(dbType, communicationType, socketType, enclaveType)
-                .forEach(Objects::requireNonNull);
+            Stream.of(dbType, communicationType, socketType, enclaveType, sslType).forEach(Objects::requireNonNull);
 
             ExecutionContext executionContext = build();
 
             List<ConfigDescriptor> configs = new ConfigGenerator().generateConfigs(executionContext);
 
-            //FIXME: YUk
+            // FIXME: YUk
             executionContext.configs = configs;
 
             if (THREAD_SCOPE.get() != null) {
@@ -158,10 +171,9 @@ public class ExecutionContext {
 
             return THREAD_SCOPE.get();
         }
-
     }
 
-    private static final ThreadLocal<ExecutionContext> THREAD_SCOPE = new ThreadLocal<ExecutionContext>();
+    private static final ThreadLocal<ExecutionContext> THREAD_SCOPE = new ThreadLocal<>();
 
     public static ExecutionContext currentContext() {
         if (Objects.isNull(THREAD_SCOPE.get())) {
@@ -170,9 +182,7 @@ public class ExecutionContext {
         return THREAD_SCOPE.get();
     }
 
-
     public static void destroyContext() {
         THREAD_SCOPE.remove();
     }
-
 }

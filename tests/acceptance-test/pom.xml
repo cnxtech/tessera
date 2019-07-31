@@ -198,12 +198,12 @@
                     </systemPropertyVariables>
                     <includes>
                         <include>AdminRestSuite</include>
-                        <include>RestSuite</include>
-                        <include>RestSuiteUnixH2</include>
-                        <include>CucumberWhitelistIT</include>
-                        <include>ConfigMigrationIT</include>
-                        <include>P2pTestSuite</include>
-                        <include>GrpcSuite</include>
+<!--                        <include>RestSuite</include>-->
+<!--                        <include>RestSuiteUnixH2</include>-->
+<!--                        <include>CucumberWhitelistIT</include>-->
+<!--                        <include>ConfigMigrationIT</include>-->
+<!--                        <include>P2pTestSuite</include>-->
+<!--                        <include>GrpcSuite</include>-->
                     </includes>
                 </configuration>
                 <executions>

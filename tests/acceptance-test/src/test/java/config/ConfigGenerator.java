@@ -3,6 +3,8 @@ package config;
 import com.quorum.tessera.config.*;
 import com.quorum.tessera.config.util.JaxbUtil;
 import com.quorum.tessera.test.DBType;
+import suite.*;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
@@ -13,11 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import suite.EnclaveType;
-import suite.ExecutionContext;
-import suite.NodeAlias;
-import suite.NodeId;
-import suite.SocketType;
 
 public class ConfigGenerator {
 
@@ -79,7 +76,7 @@ public class ConfigGenerator {
         return configList;
     }
 
-    Config createEnclaveConfig(Config config) {
+    private Config createEnclaveConfig(Config config) {
 
         final Config enclaveConfig = new Config();
 
@@ -94,7 +91,7 @@ public class ConfigGenerator {
         return enclaveConfig;
     }
 
-    public static Path calculatePath(ExecutionContext executionContext) {
+    private static Path calculatePath(ExecutionContext executionContext) {
         try {
             URI baseUri = ConfigGenerator.class.getResource("/").toURI();
 

@@ -64,6 +64,7 @@ public class TestSuite extends Suite {
                             .with(testConfig.getEnclaveType())
                             .withAdmin(testConfig.isAdmin())
                             .prefix(testConfig.getPrefix())
+                            .with(SslType.TOFU)
                             .createAndSetupContext();
 
             if (executionContext.getEnclaveType() == EnclaveType.REMOTE) {
