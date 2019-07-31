@@ -131,36 +131,36 @@ public class ConfigBuilder {
 
         final Path sslDirectory;
         try {
-            sslDirectory = Files.createTempDirectory("sslFiles");
+            sslDirectory = Files.createTempDirectory(UUID.randomUUID().toString());
         } catch (final IOException ex) {
             throw new UncheckedIOException(ex);
         }
 
-        //        final SslConfig generalSslConfig =
-        //                new SslConfig(
-        //                        SslAuthenticationMode.STRICT,
-        //                        true,
-        //                        sslDirectory.resolve("serverkeystore"),
-        //                        "testtest",
-        //                        sslDirectory.resolve("servertruststore"),
-        //                        "testtest",
-        //                        SslTrustMode.TOFU,
-        //                        sslDirectory.resolve("clientkeystore"),
-        //                        "testtest",
-        //                        sslDirectory.resolve("clienttruststore"),
-        //                        "testtest",
-        //                        SslTrustMode.TOFU,
-        //                        sslDirectory.resolve("knownclient"),
-        //                        sslDirectory.resolve("knownservers"),
-        //                        null,
-        //                        null,
-        //                        null,
-        //                        null,
-        //                        null,
-        //                        null,
-        //                        null);
+        final SslConfig generalSslConfig =
+                new SslConfig(
+                        SslAuthenticationMode.STRICT,
+                        true,
+                        sslDirectory.resolve("serverkeystore"),
+                        "testtest",
+                        sslDirectory.resolve("servertruststore"),
+                        "testtest",
+                        SslTrustMode.TOFU,
+                        sslDirectory.resolve("clientkeystore"),
+                        "testtest",
+                        sslDirectory.resolve("clienttruststore"),
+                        "testtest",
+                        SslTrustMode.TOFU,
+                        sslDirectory.resolve("knownclient"),
+                        sslDirectory.resolve("knownservers"),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
 
-        SslConfig generalSslConfig =
+        final SslConfig enclaveConfig =
                 new SslConfig(
                         SslAuthenticationMode.STRICT,
                         false,
@@ -192,7 +192,7 @@ public class ConfigBuilder {
         p2pServerConfig.setApp(AppType.P2P);
         p2pServerConfig.setEnabled(true);
         p2pServerConfig.setCommunicationType(executionContext.getCommunicationType());
-        if (executionContext.getSslType() == SslType.TOFU) {
+        if (executionContext.getSslType() == SslType.ENABLED) {
             p2pServerConfig.setServerAddress("https://localhost:" + p2pPort);
             p2pServerConfig.setBindingAddress("https://0.0.0.0:" + p2pPort);
             p2pServerConfig.setSslConfig(generalSslConfig);
@@ -208,7 +208,7 @@ public class ConfigBuilder {
             adminServerConfig.setEnabled(true);
             adminServerConfig.setCommunicationType(CommunicationType.REST);
 
-            if (executionContext.getSslType() == SslType.TOFU) {
+            if (executionContext.getSslType() == SslType.ENABLED) {
                 adminServerConfig.setServerAddress("https://localhost:" + adminPort);
                 adminServerConfig.setBindingAddress("https://0.0.0.0:" + adminPort);
                 adminServerConfig.setSslConfig(generalSslConfig);
@@ -225,10 +225,10 @@ public class ConfigBuilder {
             enclaveServerConfig.setApp(AppType.ENCLAVE);
             enclaveServerConfig.setEnabled(true);
 
-            if (executionContext.getSslType() == SslType.TOFU) {
+            if (executionContext.getSslType() == SslType.ENABLED) {
                 enclaveServerConfig.setBindingAddress("https://0.0.0.0:" + enclavePort);
                 enclaveServerConfig.setServerAddress("https://localhost:" + enclavePort);
-                enclaveServerConfig.setSslConfig(generalSslConfig);
+                enclaveServerConfig.setSslConfig(enclaveConfig);
             } else {
                 enclaveServerConfig.setBindingAddress("http://0.0.0.0:" + enclavePort);
                 enclaveServerConfig.setServerAddress("http://localhost:" + enclavePort);

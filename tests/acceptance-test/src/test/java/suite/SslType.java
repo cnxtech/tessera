@@ -1,6 +1,6 @@
 package suite;
 
 public enum SslType {
-    NONE,
-    TOFU
+    ENABLED,
+    DISABLED
 }
