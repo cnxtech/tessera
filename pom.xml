@@ -53,7 +53,7 @@
         <owasp.plugin.version>5.0.0-M2</owasp.plugin.version>
         <bouncycastle.version>1.61</bouncycastle.version>
         <logback.version>1.2.3</logback.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <project.scm.id>github</project.scm.id>
         <asm.version>7.0</asm.version>
     </properties>
@@ -1228,7 +1228,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}.1</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
